@@ -57,10 +57,11 @@ class AssistantController extends Controller
         $assistant->city=$request->input('city');
         $assistant->city=$request->input('city');
         $assistant->status=$request->input('status');
-        $assistant->company_id =$request->input('company');
-        $assistant->save();
 
-        $assistant->roles()->sync($request->input('roles'));
+        $assistant->company_id =$request->input('company');
+
+
+        $assistant->save();
 
         return redirect()->route('assistants');
 

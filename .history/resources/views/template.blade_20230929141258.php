@@ -38,7 +38,6 @@
                             <li><a class="nav-link" aria-current="page" href="{{ URL::to('assistants/create') }}">Dodaj
                                     asystenta</a></li>
                         </ul>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ URL::to('patients') }}">Pacjenci</a>
                     </li>

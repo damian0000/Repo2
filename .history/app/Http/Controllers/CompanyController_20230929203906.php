@@ -30,7 +30,7 @@ class CompanyController extends Controller
     {
 
         $validatedData=$request->validate([
-            'name' => 'required|min:3|max:50',
+            'name' => ['required|min:3', 'max:50'],
         ]);
 
         $company=new Company;

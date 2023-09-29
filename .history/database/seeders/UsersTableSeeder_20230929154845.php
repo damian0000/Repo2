@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'post_code'=>'62-100',
             'city'=>'Wągrowiec',
             'company_id'=>1,
-            'status'=>'Active'
+            'isActive'=>true
         ]);
 
         //asystent

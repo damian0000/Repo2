@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Company;
 use App\Repositories\CompanyRepository;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -30,8 +31,16 @@ class CompanyController extends Controller
     {
 
         $validatedData=$request->validate([
-            'name' => 'required|min:3|max:50',
+            'name' => ['required', 'max:50'],
         ]);
+        $messages = [
+            'name.required' => 'Podaj nazwę organizacji',
+        ];
+        if ($validatedData->fails()) {
+            return redirect()->route('companies')
+                        ->withErrors($validatedData)
+                        ->withInput();
+        }
 
         $company=new Company;
         $company->name=$request->input('name');

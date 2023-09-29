@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Company;
 use App\Repositories\CompanyRepository;
 
@@ -28,12 +26,13 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
+        $company=new Company;
 
-        $validatedData=$request->validate([
-            'name' => 'required|min:3|max:50',
+        $request->validate([
+            'name' => ['required', 'max:50'],
         ]);
 
-        $company=new Company;
+
         $company->name=$request->input('name');
 
         $company->save();

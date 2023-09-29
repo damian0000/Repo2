@@ -34,9 +34,8 @@ class AssistantController extends Controller
     public function create()
     {
         $companies=Company::all();
-        $roles=Role::all();
-        return view('assistants.create', ["companiesList"=>$companies,
-                                        "rolesList"=>$roles,
+
+        return view('assistants.create', ["companyList"=>$companies,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Dodaj asystenta"]);
     }
@@ -57,10 +56,11 @@ class AssistantController extends Controller
         $assistant->city=$request->input('city');
         $assistant->city=$request->input('city');
         $assistant->status=$request->input('status');
-        $assistant->company_id =$request->input('company');
-        $assistant->save();
 
-        $assistant->roles()->sync($request->input('roles'));
+        $assistant->company_id =$request->input('company');
+
+
+        $assistant->save();
 
         return redirect()->route('assistants');
 

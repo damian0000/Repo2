@@ -29,7 +29,7 @@ Route::get('/users/{id}', 'App\Http\Controllers\UserController@show');
 //--------------assistants-----------------------
 Route::get('/assistants', 'App\Http\Controllers\AssistantController@index')->name('assistants');
 Route::get('/assistants/create', 'App\Http\Controllers\AssistantController@create')->name('create_assistants');
-Route::post('/assistants/save', 'App\Http\Controllers\AssistantController@store')->name('save_assistants');
+Route::get('/assistants/save', 'App\Http\Controllers\AssistantController@store')->name('save_assistants');
 
 
 Route::get('/assistants/edit/{id}', 'App\Http\Controllers\AssistantController@edit');

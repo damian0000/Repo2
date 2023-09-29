@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Company;
-use App\Models\Role;
 use App\Repositories\UserRepository;
 
 class AssistantController extends Controller
@@ -34,9 +33,7 @@ class AssistantController extends Controller
     public function create()
     {
         $companies=Company::all();
-        $roles=Role::all();
-        return view('assistants.create', ["companiesList"=>$companies,
-                                        "rolesList"=>$roles,
+        return view('assistants.create', ["companyList"=>$companies,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Dodaj asystenta"]);
     }
@@ -44,7 +41,6 @@ class AssistantController extends Controller
 
     public function store(Request $request)
     {
-
         $assistant=new User;
         $assistant->name=$request->input('name');
         $assistant->surname=$request->input('surname');
@@ -56,13 +52,13 @@ class AssistantController extends Controller
         $assistant->post_code=$request->input('post_code');
         $assistant->city=$request->input('city');
         $assistant->city=$request->input('city');
-        $assistant->status=$request->input('status');
-        $assistant->company_id =$request->input('company');
-        $assistant->save();
+        $assistant
+        $name_company=$request->input('company');
 
-        $assistant->roles()->sync($request->input('roles'));
 
-        return redirect()->route('assistants');
+
+        $assistant->name=$request->input('name');
+        $assistant->name=$request->input('name');
 
     }
 
