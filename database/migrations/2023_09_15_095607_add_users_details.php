@@ -40,7 +40,7 @@ class AddUsersDetails extends Migration
             $table->dropColumn('street');
             $table->dropColumn('post_code');
             $table->dropColumn('city');
-            $table->dropColumn('isActive');
+            $table->dropColumn('status');
 
         });
     }

@@ -10,13 +10,13 @@ class Visit extends Model
     protected $fillable = [
         'assistant_id',
         'patient_id',
-        'service_id',
         'from_patient_id',
         'tavel_time',
-        'service_date',
-        'service_start_time',
-        'service_end_time',
-        'description',
+        'date_visit',
+        'start_time_visit',
+        'end_time_visit',
+        'description_visit',
+        'additional_notes',
         'isDelete',
         'created_at',
         'updated_at'
@@ -30,12 +30,8 @@ class Visit extends Model
     {
         return $this->belongsTo(User::class, 'patient_id');
     }
-    public function fromPatient()
+    public function prevPatient()
     {
         return $this->belongsTo(User::class, 'from_patient_id');
-    }
-    public function service()
-    {
-        return $this->belongsTo(Service::class, 'service_id');
     }
 }

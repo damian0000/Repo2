@@ -15,11 +15,12 @@ class CreateVisitsTable extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->integer('tavel_time')->nullable();
-            $table->date('service_date');
-            $table->time('service_start_time');
-            $table->time('service_end_time');
-            $table->string('description')->nullable();
+            $table->integer('travel_time')->nullable();
+            $table->date('date_visit');
+            $table->time('start_time_visit');
+            $table->time('end_time_visit');
+            $table->string('description_visit')->nullable();
+            $table->string('additional_notes')->nullable();
             $table->boolean('isDelete');
             $table->timestamps();
         });

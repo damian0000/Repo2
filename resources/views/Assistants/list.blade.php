@@ -16,6 +16,8 @@
                     <th scope="col">Imię Nazwisko</th>
                     <th scope="col">Telefon</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Operacje</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +28,12 @@
                                 {{ $assistant->surname }}</a></td>
                         <td>{{ $assistant->phone }}</td>
                         <td>{{ $assistant->email }}</td>
+                        <td>{{ $assistant->status }}</td>
+                        <td>
+                            <a href="{{ URL::to('assistants/delete/' . $assistant->id) }}"
+                                onclick="return confirm('Czy na pewno usunąć?')">Usun asystenta</a><br>
+                            <a href="{{ URL::to('assistants/edit/' . $assistant->id) }}">Edytuj asystenta</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

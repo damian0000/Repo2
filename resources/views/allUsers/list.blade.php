@@ -16,6 +16,7 @@
                     <th scope="col">Imię Nazwisko</th>
                     <th scope="col">Telefon</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                                 {{ $user->surname }}</a></td>
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->status }}</td>
                     </tr>
                 @endforeach
             </tbody>

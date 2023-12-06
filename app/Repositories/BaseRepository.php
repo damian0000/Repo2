@@ -24,7 +24,7 @@ abstract class BaseRepository{
 
     public function delete($id)
     {
-        return $this->model->destroy($data);
+        return $this->model->destroy($id);
     }
 
     public function find($id)

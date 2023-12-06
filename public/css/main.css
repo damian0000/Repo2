@@ -1,0 +1,23 @@
+body {
+  font-family: "Roboto";
+  font-size: 16px;
+}
+
+footer {
+  color: blue;
+  background-color: bisque;
+  padding: 10px 0px;
+  margin-top: 50px;
+}
+
+nav {
+  margin-bottom: 50px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: black;
+}
+
+label, input {
+  margin: 5px 0px 5px 0px;
+}

@@ -8,9 +8,13 @@
 
 @section('content')
     <div class="container">
-        <h1>Dodaj asystenta</h1>
-
-        <form action="{{ route('save_assistants') }}" method="POST" role="form">
+        {{-- @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
+        @endif --}}
+        <h1>Dodaj podopiecznego</h1>
+        <form action="{{ route('save_patients') }}" method="POST" role="form">
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="form-group">
@@ -27,6 +31,16 @@
             @error('surname')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+
+            <div class="form-group">
+                <label for="Niepełnosprawność">Niepełnosprawność</label>
+                <input type="text" class="form-control" title="Niepełnosprawność" name="disability" />
+            </div>
+            @error('disability')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+
             <div class="form-group">
                 <label for="Pesel">Pesel</label>
                 <input type="text" class="form-control" title="Pesel" name="pesel" />
