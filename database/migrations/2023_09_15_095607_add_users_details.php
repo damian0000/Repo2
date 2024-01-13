@@ -22,7 +22,7 @@ class AddUsersDetails extends Migration
             $table->string('post_code', 6);
             $table->string('city', 20);
             $table->string('status');
-
+            $table->boolean('is_delete');
         });
     }
 
@@ -41,6 +41,7 @@ class AddUsersDetails extends Migration
             $table->dropColumn('post_code');
             $table->dropColumn('city');
             $table->dropColumn('status');
+            $table->dropColumn('is_delete');
 
         });
     }

@@ -20,6 +20,7 @@
                     <th scope="col">Data Usługi</th>
                     <th scope="col">Od godz.</th>
                     <th scope="col">Do godz</th>
+                    <th scope="col">Całk. czas</th>
                     <th scope="col">Operacje</th>
                 </tr>
             </thead>
@@ -48,6 +49,9 @@
 
                         <td>
                             {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->end_time_visit)->format('H:i') }}
+                        </td>
+                        <td>
+                            {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->time_visit)->format('H:i') }}
                         </td>
                         <td>
                             <a href="{{ URL::to('visits/delete/' . $visit->id) }}"

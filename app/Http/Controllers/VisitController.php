@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Service;
-use App\Models\Visit;
 use App\Repositories\VisitRepository;
 use App\Repositories\UserRepository;
-
+use Carbon\Carbon;
 
 class VisitController extends Controller
 {
@@ -33,6 +32,7 @@ class VisitController extends Controller
 
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'travel_time' => 'required|numeric',
             'date' => 'required',
@@ -49,6 +49,13 @@ class VisitController extends Controller
             'description_visit.required' => 'Wymagany opis usługi'
         ]);
 
+        $startTime= Carbon::parse($request->input('start_hour_visit'));
+        $stime = ($startTime->hour * 60) + $startTime->minute;
+        $finishTime=Carbon::parse($request->input('end_hour_visit'));
+        $estime = ($finishTime->hour * 60) + $finishTime->minute;
+        $time_minute=$estime-$stime;
+        $hours = intdiv($time_minute, 60).':'. ($time_minute % 60);
+
         $visit=new Visit;
         $visit->assistant_id=$request->input('assistant');
         $visit->from_patient_id=$request->input('prev_visit');
@@ -57,6 +64,7 @@ class VisitController extends Controller
         $visit->date_visit=$request->input('date');
         $visit->start_time_visit=$request->input('start_hour_visit');
         $visit->end_time_visit=$request->input('end_hour_visit');
+        $visit->time_visit=$hours;
         $visit->description_visit=$request->input('description_visit');
         $visit->additional_notes=$request->input('additional_notes_visit');
         $visit->isDelete=$request->input('isDelete');
@@ -92,6 +100,13 @@ class VisitController extends Controller
             'description_visit.required' => 'Wymagany opis usługi'
         ]);
 
+        $startTime= Carbon::parse($request->input('start_hour_visit'));
+        $stime = ($startTime->hour * 60) + $startTime->minute;
+        $finishTime=Carbon::parse($request->input('end_hour_visit'));
+        $estime = ($finishTime->hour * 60) + $finishTime->minute;
+        $time_minute=$estime-$stime;
+        $hours = intdiv($time_minute, 60).':'. ($time_minute % 60);
+
         $visit=Visit::find($request->input('id'));
         $visit->assistant_id=$request->input('assistant');
         $visit->from_patient_id=$request->input('prev_visit');
@@ -100,6 +115,7 @@ class VisitController extends Controller
         $visit->date_visit=$request->input('date');
         $visit->start_time_visit=$request->input('start_hour_visit');
         $visit->end_time_visit=$request->input('end_hour_visit');
+        $visit->time_visit=$hours;
         $visit->description_visit=$request->input('description_visit');
         $visit->additional_notes=$request->input('additional_notes_visit');
         $visit->isDelete=$request->input('isDelete');

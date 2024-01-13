@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 use App\Models\Visit;
+use App\Models\User;
+use DB;
 
 //wykonuje logikę dostępu do danych
 class VisitRepository extends BaseRepository{

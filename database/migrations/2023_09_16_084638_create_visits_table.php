@@ -19,9 +19,10 @@ class CreateVisitsTable extends Migration
             $table->date('date_visit');
             $table->time('start_time_visit');
             $table->time('end_time_visit');
+            $table->time('time_visit');
             $table->string('description_visit')->nullable();
             $table->string('additional_notes')->nullable();
-            $table->boolean('isDelete');
+            $table->boolean('is_delete');
             $table->timestamps();
         });
     }

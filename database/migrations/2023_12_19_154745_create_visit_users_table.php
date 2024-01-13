@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCompany extends Migration
+class CreateVisitUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCompany extends Migration
      */
     public function up()
     {
-        Schema::create('company', function (Blueprint $table) {
+        Schema::create('visitUsers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
+            $table->boolean('is_delete');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateCompany extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company');
+        Schema::dropIfExists('visitUsers');
     }
 }

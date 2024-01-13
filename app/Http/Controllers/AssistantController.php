@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Company;
 use App\Models\Role;
+
+use App\Models\Visit;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\VisitRepository;
 
 class AssistantController extends Controller
 {
@@ -26,13 +29,16 @@ class AssistantController extends Controller
 
 
     }
-    public function show(UserRepository $userRepo, $id)
+    public function show(UserRepository $userRepo, VisitRepository $visitRepo, $id)
     {
 
         $assistant=$userRepo->find($id);
+        $visit=$visitRepo->getAssistantVisit($id);
         return view('assistants.show', ["assistant"=>$assistant,
+                                        "visitList"=>$visit,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Asystent"]);
+
 
     }
     public function create(RoleRepository $roleRepo)
