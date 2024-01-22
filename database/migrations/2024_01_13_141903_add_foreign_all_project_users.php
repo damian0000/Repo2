@@ -30,7 +30,9 @@ class AddForeignAllProjectUsers extends Migration
      */
     public function down()
     {
-        $table->dropForeign('project_id_projects_foreign');
-        $table->dropForeign('user_id_pu_users_foreign');
+        Schema::table('projectUsers', function (Blueprint $table) {
+            $table->dropForeign('project_id_projects_foreign');
+            $table->dropForeign('user_id_pu_users_foreign');
+        });
     }
 }

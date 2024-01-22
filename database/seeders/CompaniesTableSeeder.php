@@ -15,17 +15,21 @@ class CompaniesTableSeeder extends Seeder
     public function run()
     {
         DB::table('companies')->insert([
-            'name'=>'Fundacja Więccej z życia'
+            'name'=>'Fundacja Więcej z życia',
+            'is_delete'=>0
         ]);
         DB::table('companies')->insert([
-            'name'=>'Fundacja Akme'
+            'name'=>'Fundacja Akme',
+            'is_delete'=>0
         ]);
         DB::table('companies')->insert([
-            'name'=>'Stowarzyszenie Start Poznań'
+            'name'=>'Stowarzyszenie Start Poznań',
+            'is_delete'=>0
         ]);
 
         DB::table('companies')->insert([
-            'name'=>'Fundacja Aktywni bez barier'
+            'name'=>'Fundacja Aktywni bez barier',
+            'is_delete'=>0
         ]);
     }
 }

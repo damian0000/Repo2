@@ -16,7 +16,8 @@ class CreateCountHoursYearTable extends Migration
         Schema::create('countHoursYears', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('month');
-            $table->integer('yerar');
+            $table->integer('hours');
+            $table->integer('year');
             $table->boolean('is_delete');
             $table->timestamps();
         });

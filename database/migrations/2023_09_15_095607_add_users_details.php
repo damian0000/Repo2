@@ -20,8 +20,8 @@ class AddUsersDetails extends Migration
             $table->string('phone', 15);
             $table->string('street', 30);
             $table->string('post_code', 6);
-            $table->string('city', 20);
-            $table->string('status');
+            $table->string('city', 30);
+            $table->string('status', 30);
             $table->boolean('is_delete');
         });
     }

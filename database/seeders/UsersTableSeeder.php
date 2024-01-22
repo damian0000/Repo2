@@ -24,8 +24,9 @@ class UsersTableSeeder extends Seeder
             'street'=>'Ks. Wujka 16a/12',
             'post_code'=>'62-100',
             'city'=>'Wągrowiec',
+            'status'=>'Aktywny',
             'company_id'=>1,
-            'status'=>'Active'
+            'is_delete'=>0
         ]);
 
         //asystent
@@ -39,8 +40,9 @@ class UsersTableSeeder extends Seeder
             'street'=>'Bartodziejska 63',
             'post_code'=>'62-100',
             'city'=>'Skoki',
+            'status'=>'Aktywny',
             'company_id'=>1,
-            'status'=>'Active'
+            'is_delete'=>0
         ]);
 
         DB::table('users')->insert([
@@ -53,8 +55,9 @@ class UsersTableSeeder extends Seeder
             'street'=>'Kościuszki 16',
             'post_code'=>'62-100',
             'city'=>'Wągrowiec',
+            'status'=>'Aktywny',
             'company_id'=>1,
-            'status'=>'Active'
+            'is_delete'=>0
         ]);
 
         // patient
@@ -69,8 +72,9 @@ class UsersTableSeeder extends Seeder
             'street'=>'Kcyńska 8',
             'post_code'=>'62-100',
             'city'=>'Skoki',
+            'status'=>'Aktywny',
             'company_id'=>1,
-            'status'=>'Active'
+            'is_delete'=>0
         ]);
 
         DB::table('users')->insert([
@@ -84,8 +88,9 @@ class UsersTableSeeder extends Seeder
             'street'=>'Kcyńska 8',
             'post_code'=>'62-100',
             'city'=>'Wągrowiec',
+            'status'=>'Aktywny',
             'company_id'=>1,
-            'status'=>'Active'
+            'is_delete'=>0
         ]);
     }
 }

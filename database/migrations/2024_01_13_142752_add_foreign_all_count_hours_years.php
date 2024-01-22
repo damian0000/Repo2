@@ -33,8 +33,10 @@ class AddForeignAllCountHoursYears extends Migration
      */
     public function down()
     {
-        $table->dropForeign('assistant_id_hy_users_foreign');
-        $table->dropForeign('patient_id_hy_users_foreign');
-        $table->dropForeign('user_id_hy_projects_foreign');
+        Schema::table('countHoursYears', function (Blueprint $table) {
+            $table->dropForeign('assistant_id_hy_users_foreign');
+            $table->dropForeign('patient_id_hy_users_foreign');
+            $table->dropForeign('user_id_hy_projects_foreign');
+        });
     }
 }

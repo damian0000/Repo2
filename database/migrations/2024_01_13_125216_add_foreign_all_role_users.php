@@ -30,7 +30,9 @@ class AddForeignAllRoleUsers extends Migration
      */
     public function down()
     {
+        Schema::table('roleUsers', function (Blueprint $table) {
         $table->dropForeign('role_id_roles_foreign');
         $table->dropForeign('user_id_users_foreign');
+        });
     }
 }

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -38,11 +39,18 @@ class User extends Authenticatable
         return $this->belongsTo(Company::class, 'company_id');
     }
 
-    public function roles()
+    public function role()
     {
         return $this->belongsToMany(Role::class, 'roleUsers', 'user_id', 'role_id');
-
     }
+
+    public function visit()
+    {
+        return $this->belongsToMany(Visit::class, 'visitUsers', 'visit_id');
+    }
+
+
+
     public function hasAnyRole($roles)
     {
         if(is_array($roles))
