@@ -33,10 +33,8 @@
                         <td>Rola </td>
                         <td>
                             <ul>
-                                @foreach ($assistant->roles as $role)
-                                    <li>
-                                        {{ $role->name }}
-                                    </li>
+                                @foreach ($assistant->role as $role)
+                                    <li>{{ $role->name }}</li>
                                 @endforeach
                             </ul>
                         </td>
@@ -63,39 +61,20 @@
             </thead>
 
             <tbody>
-                @foreach ($visitList as $visit)
-                    <tr>
-                        <td scope="row">{{ $visit->id }}</td>
-                        <td>{{ $visit->patient->name }} {{ $visit->patient->surname }}</td>
-
-                        @if ($visit->prevPatient)
-                            <td>
-                                {{ $visit->prevPatient->name }} {{ $visit->prevPatient->surname }}
-                            </td>
-                            <td>{{ $visit->travel_time }}min</td>
-                        @else
-                            <td>--</td>
-                            <td>--</td>
-                        @endif
-                        <td>
-                            {{ \Carbon\Carbon::parse($visit->date_visit)->format('d.m.Y') }}
-                        </td>
-                        <td>
-                            {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->start_time_visit)->format('H:i') }}
-                        </td>
-
-                        <td>
-                            {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->end_time_visit)->format('H:i') }}
-                        </td>
-                        <td>
-                            {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->time_visit)->format('H:i') }}
-                        </td>
-                        <td>
-                            <a href="{{ URL::to('visits/delete/' . $visit->id) }}"
-                                onclick="return confirm('Czy na pewno usunąć?')">Usun usługę</a><br>
-                            <a href="{{ URL::to('visits/edit/' . $visit->id) }}">Edytuj usługę</a>
-                        </td>
-                    </tr>
+                @foreach($assistant->visit as $visit)
+                    @foreach($visit->visitUsers as $user)
+                        <tr>
+                            <th scope="row">{{ $visit->id }}</th>
+                            <td>{{ $user->patient->name }} {{ $user->patient->surname }}</td>
+                            <td>{{ $user->fromPatient->name }} {{ $user->fromPatient->surname }}</td>
+                            <td>{{ $visit->travel_time }}min.</td>
+                            <td>{{ $visit->date_visit }}</td>
+                            <td>{{ $visit->start_time_visit }}</td>
+                            <td>{{ $visit->end_time_visit }}</td>
+                            <td>{{ $visit->time_visit }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
                 @endforeach
             </tbody>
         </table>

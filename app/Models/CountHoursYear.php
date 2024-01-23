@@ -12,6 +12,7 @@ class CountHoursYear extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'counthoursyears';
     protected $fillable = [
         'assistant_id',
         'patient_id',

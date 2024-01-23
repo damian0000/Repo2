@@ -33,9 +33,8 @@ class AssistantController extends Controller
     {
 
         $assistant=$userRepo->find($id);
-        $visit=$visitRepo->getAssistantVisit($id);
+
         return view('assistants.show', ["assistant"=>$assistant,
-                                        "visitList"=>$visit,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Asystent"]);
 

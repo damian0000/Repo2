@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\VisitUser;
-use App\Models\RolesUser;
+use App\Models\CountHoursYear;
+use App\Models\Project;
 use App\Models\Role;
 use App\Models\Visit;
 use App\Repositories\UserRepository;
@@ -21,11 +21,14 @@ class UserController extends Controller
         $statistics=$userRepo->getStatistics();
         $users=User::all();
         $visit=Visit::with('visitUsers.assistant', 'visitUsers.patient', 'visitUsers.fromPatient')->get();
- //       dd($visit);
-Log::info($visit);
+        $project=Project::all();
+        $countHoursYear=CountHoursYear::all();
+//Log::info($users);
         return view('AllUsers.list', ["userList"=>$users,
                                         "statistics"=>$statistics,
                                         "visitLList"=>$visit,
+                                        "projectList"=>$project,
+                                        "hoursList"=>$countHoursYear,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Lista użytkowników"]);
 

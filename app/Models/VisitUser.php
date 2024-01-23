@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class VisitUser extends Model
 {
+    protected $table = 'visitusers';
+
     protected $fillable = [
         'assistant_id',
         'patient_id',
@@ -37,8 +39,5 @@ class VisitUser extends Model
         return $this->belongsTo(Visit::class);
     }
 
-    public static function getAllVisitsWithUsers()
-    {
-        return self::with(['visit', 'assistant', 'patient', 'fromPatient'])->get();
-    }
+
 }

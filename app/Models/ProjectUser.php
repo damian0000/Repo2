@@ -12,6 +12,7 @@ class ProjectUser extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'projectusers';
     protected $fillable = [
         'project_id',
         'user_id',
@@ -28,5 +29,5 @@ class ProjectUser extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+  
 }

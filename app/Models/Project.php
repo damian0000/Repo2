@@ -17,6 +17,16 @@ class Project extends Model
         'description',
         'created_at',
         'updated_at',
-        'is_delete'
+        'is_delete',
+        'company_id'
     ];
+    public function projectUsers()
+    {
+        return $this->hasMany(ProjectUser::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
 }

@@ -50,6 +50,23 @@ class User extends Authenticatable
     }
 
 
+    public function project()
+    {
+        return $this->belongsToMany(Project::class, 'projectUsers', 'user_id', 'project_id');
+    }
+
+
+    public function countHours()
+    {
+        return $this->belongsToMany(Project::class, 'countHoursYear', 'assistant_id', 'patient_id', 'project_id');
+    }
+
+
+
+
+
+
+
 
     public function hasAnyRole($roles)
     {
