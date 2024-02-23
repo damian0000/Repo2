@@ -15,7 +15,7 @@ class CreateProjectsUsersTable extends Migration
     {
         Schema::create('projectUsers', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
             $table->timestamps();
         });
     }

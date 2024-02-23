@@ -15,18 +15,26 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
+        'company_id',
         'created_at',
         'updated_at',
-        'is_delete',
-        'company_id'
+        'is_delete'
     ];
     public function projectUsers()
     {
         return $this->hasMany(ProjectUser::class);
     }
 
-    public function company()
+    // public function company()
+    // {
+    //     return $this->belongsToMany(Company::class, 'companyprojects', 'project_id', 'company_id');
+    // }
+
+
+
+    
+    public static function findName($name)
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return self::where('name', $name)->first();
     }
 }

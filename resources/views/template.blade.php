@@ -48,9 +48,9 @@
                                 Asystenci
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('assistants') }}">Nasi
+                                <li><a class="nav-link" aria-current="page" href="{{ route('assistants.index') }}">Nasi
                                         Asystenci</a></li>
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('assistants/create') }}">Dodaj
+                                <li><a class="nav-link" aria-current="page" href="{{ route('assistants.create') }}">Dodaj
                                         asystenta</a></li>
                             </ul>
                         </li>
@@ -60,9 +60,9 @@
                                 Pacjenci
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('patients') }}">Nasi
+                                <li><a class="nav-link" aria-current="page" href="{{ route('patients.index') }}">Nasi
                                         Pacjenci</a></li>
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('patients/create') }}">Dodaj
+                                <li><a class="nav-link" aria-current="page" href="{{ route('patients.create') }}">Dodaj
                                         Pacjenta</a></li>
                             </ul>
                         </li>
@@ -73,10 +73,23 @@
                                 Organizacje
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('companies') }}">Nasze
+                                <li><a class="nav-link" aria-current="page" href="{{ route('companies.index')}}">Nasze
                                         organizacje</a></li>
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('companies/create') }}">Dodaj
+                                <li><a class="nav-link" aria-current="page" href="{{ route('companies.create') }}">Dodaj
                                         organizacje</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Projekty
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="nav-link" aria-current="page" href="{{ route('projects.index')}}">Nasze
+                                        projekty</a></li>
+                                <li><a class="nav-link" aria-current="page" href="{{ route('projects.create') }}">Dodaj
+                                    projekt</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -85,8 +98,8 @@
                                 Usługi
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="nav-link" aria-current="page" href="{{ URL::to('visits') }}">Zobacz usługi</a>
-                                <li><a class="nav-link" aria-current="page" href="{{ URL::to('visits/create') }}">Dodaj
+                                <a class="nav-link" aria-current="page" href="{{ route('visits.index')}}">Zobacz usługi</a>
+                                <li><a class="nav-link" aria-current="page" href="{{ route('visits.create')}}">Dodaj
                                         usługę</a></li>
                             </ul>
                         </li>

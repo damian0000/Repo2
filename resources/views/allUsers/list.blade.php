@@ -44,48 +44,6 @@
                 @endforeach
             </tbody>
         </table>
-        <h2>Wizyty</h2>
-        @foreach ($visitLList as $visit) 
-            @foreach($visit->visitUsers as $item)
-                <p>Id wizyty: {{ $visit->id }}</p>
-                <p>Data wizyty: {{ $visit->date_visit }}</p>
-                <p>Asystent {{$item->assistant->name}} {{$item->assistant->surname}}</p>
-                <p>Pacjent {{$item->patient->name}} {{$item->patient->surname}}</p>
-            @endforeach    
-        @endforeach
-        <br><br><br>
-        <h2>Projekty</h2>
-        @foreach ($projectList as $project) 
-            <p>Id projektu: {{ $project->id }}</p>
-            <p>nazwa projektu: {{ $project->name }}</p>
-            <p>nazwa firmy: {{ $project->company->name }}</p>
-            @foreach($project->projectUsers as $item)
-                <p> {{$item->user->name}} {{$item->user->surname}}</p>
-            @endforeach   
-        @endforeach
-
-        <br><br><br>
-        <h2>Godziny</h2>
-        @foreach ($hoursList as $hours) 
-            <p>Id w tabeli: {{ $hours->id }}</p>
-            <p>Miesiąc: {{ $hours->month }}</p>
-            <p>Ilość godziń: {{ $hours->hours }}</p>
-            <p>Projekt: {{ $hours->project->name }}</p>
-            <p>Firma: {{ $hours->project->company->name }}</p>
-            <p>Asystent: {{ $hours->assistant->name }} {{ $hours->assistant->surname }}</p>
-            <p>podopieczny: {{ $hours->patient->name }} {{ $hours->patient->surname }}</p>
-
-        @endforeach
-
-        <br><br><br>
-        @foreach ($statistics as $stat)
-            @if ($stat->status == 'Active')
-                Liczba nieaktywnych użytkowników: {{ $stat->user_count }}<br>
-            @else
-                Liczba aktywnych użytkowników: {{ $stat->user_count }}
-            @endif
-        @endforeach
-
-
+  
     </div>
 @endsection

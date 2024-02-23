@@ -29,8 +29,8 @@ class User extends Authenticatable
         'street',
         'post_code',
         'city',
-        'role_id',
-        'isActive',
+        'status',
+        'is_delete',
         'company_id'
     ];
 

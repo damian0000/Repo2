@@ -10,9 +10,9 @@
     <div class="container">
         <h1>Edytuj podopiecznego - {{ $patient->name }} {{ $patient->surname }}</h1>
 
-        <form action="{{ route('save_edit_patients') }}" method="POST" role="form">
-
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <form action="{{ route('patients.update',  ['userId' => $patient->id]) }}" method="POST" role="form">
+            @csrf
+            @method("PUT")
             <input type="hidden" name="id" value="{{ $patient->id }}" />
             <div class="form-group">
                 <label for="name">Imię</label>
@@ -44,7 +44,7 @@
             @enderror
             <div class="form-group">
                 <label for="disability">Niepełnosprawność</label>
-                <textarea id="w3review" class="form-control" id="disability" name="disability" rows="4">{{ $patient->disability }}</textarea>
+                <textarea id="w3review" class="form-control" name="disability" rows="4">{{ $patient->disability }}</textarea>
             </div>
             @error('disability')
                 <div class="alert alert-danger">{{ $message }}</div>
@@ -82,29 +82,27 @@
                 <label for="status">Status</label>
                 @if ($patient->status == 'Active')
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Active" name="status" id="status"
+                        <input class="form-check-input" type="radio" value="Aktywny" name="status" id="status"
                             checked />
                         <label class="form-check-label" for="status">Aktywny</label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Inactive" name="status" id="status" />
-                        <label class="form-check-label" for="status">Niektywny</label>
+                        <input class="form-check-input" type="radio" value="Nieaktywny" name="status" id="status" />
+                        <label class="form-check-label" for="status">Nieaktywny</label>
                     </div>
                 @else
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Active" name="status" id="status" />
+                        <input class="form-check-input" type="radio" value="Aktywny" name="status" id="status" />
                         <label class="form-check-label" for="status">Aktywny</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Inactive" name="status" id="status"
+                        <input class="form-check-input" type="radio" value="Nieaktywny" name="status" id="status"
                             checked />
-                        <label class="form-check-label" for="status">Niektywny</label>
+                        <label class="form-check-label" for="status">Nieaktywny</label>
                     </div>
                 @endif
             </div>
-
-            <input type="hidden" name="roles" value="3" />
             <input type="submit" class="btn btn-primary" value="Aktualizuj" />
         </form>
     </div>

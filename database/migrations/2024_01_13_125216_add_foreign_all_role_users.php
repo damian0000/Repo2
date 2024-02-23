@@ -18,8 +18,8 @@ class AddForeignAllRoleUsers extends Migration
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('user_id');
 
-            $table->foreign('role_id', 'role_id_roles_foreign')->references('id')->on('roles');
-            $table->foreign('user_id', 'user_id_users_foreign')->references('id')->on('users');
+            $table->foreign('role_id', 'ru_role_id_roles_foreign')->references('id')->on('roles');
+            $table->foreign('user_id', 'ru_user_id_users_foreign')->references('id')->on('users');
         });
     }
 
@@ -31,8 +31,8 @@ class AddForeignAllRoleUsers extends Migration
     public function down()
     {
         Schema::table('roleUsers', function (Blueprint $table) {
-        $table->dropForeign('role_id_roles_foreign');
-        $table->dropForeign('user_id_users_foreign');
+        $table->dropForeign('ru_role_id_roles_foreign');
+        $table->dropForeign('ru_user_id_users_foreign');
         });
     }
 }

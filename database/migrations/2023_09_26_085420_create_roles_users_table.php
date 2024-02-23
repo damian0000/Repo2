@@ -15,7 +15,7 @@ class CreateRolesUsersTable extends Migration
     {
         Schema::create('roleUsers', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
 
         });
     }

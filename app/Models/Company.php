@@ -23,4 +23,14 @@ class Company extends Model
     {
         return $this->belongsTo(User::class, 'company_id');
     }
+
+    public function project()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    // public function project()
+    // {
+    //     return $this->belongsTo(User::class, 'company_id');
+    // }
 }

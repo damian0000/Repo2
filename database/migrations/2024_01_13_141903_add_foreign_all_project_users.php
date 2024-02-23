@@ -18,8 +18,8 @@ class AddForeignAllProjectUsers extends Migration
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id');
 
-            $table->foreign('project_id', 'project_id_projects_foreign')->references('id')->on('projects');
-            $table->foreign('user_id', 'user_id_pu_users_foreign')->references('id')->on('users');
+            $table->foreign('project_id', 'pu_project_id_projects_foreign')->references('id')->on('projects');
+            $table->foreign('user_id', 'pu_user_id_users_foreign')->references('id')->on('users');
         });
     }
 
@@ -31,8 +31,8 @@ class AddForeignAllProjectUsers extends Migration
     public function down()
     {
         Schema::table('projectUsers', function (Blueprint $table) {
-            $table->dropForeign('project_id_projects_foreign');
-            $table->dropForeign('user_id_pu_users_foreign');
+            $table->dropForeign('pu_project_id_projects_foreign');
+            $table->dropForeign('pu_user_id_users_foreign');
         });
     }
 }

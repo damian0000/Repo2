@@ -14,15 +14,13 @@ class AddForeignAllCountHoursYears extends Migration
     public function up()
     {
         Schema::table('countHoursYears', function (Blueprint $table) {
-
-
             $table->unsignedBigInteger('assistant_id');
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('project_id');
 
-            $table->foreign('assistant_id', 'assistant_id_hy_users_foreign')->references('id')->on('users');
-            $table->foreign('patient_id', 'patient_id_hy_users_foreign')->references('id')->on('users');
-            $table->foreign('project_id', 'user_id_hy_projects_foreign')->references('id')->on('projects');
+            $table->foreign('assistant_id', 'chy_assistant_id_users_foreign')->references('id')->on('users');
+            $table->foreign('patient_id', 'chy_patient_id_users_foreign')->references('id')->on('users');
+            $table->foreign('project_id', 'chy_user_id_projects_foreign')->references('id')->on('projects');
         });
     }
 
@@ -34,9 +32,9 @@ class AddForeignAllCountHoursYears extends Migration
     public function down()
     {
         Schema::table('countHoursYears', function (Blueprint $table) {
-            $table->dropForeign('assistant_id_hy_users_foreign');
-            $table->dropForeign('patient_id_hy_users_foreign');
-            $table->dropForeign('user_id_hy_projects_foreign');
+            $table->dropForeign('chy_assistant_id_users_foreign');
+            $table->dropForeign('chy_patient_id_users_foreign');
+            $table->dropForeign('chy_user_id_projects_foreign');
         });
     }
 }

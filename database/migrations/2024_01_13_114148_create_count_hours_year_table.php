@@ -18,7 +18,7 @@ class CreateCountHoursYearTable extends Migration
             $table->smallInteger('month');
             $table->integer('hours');
             $table->integer('year');
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
             $table->timestamps();
         });
     }

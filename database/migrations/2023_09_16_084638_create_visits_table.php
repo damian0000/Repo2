@@ -22,7 +22,7 @@ class CreateVisitsTable extends Migration
             $table->time('time_visit');
             $table->string('description_visit')->nullable();
             $table->string('additional_notes')->nullable();
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
             $table->timestamps();
         });
     }

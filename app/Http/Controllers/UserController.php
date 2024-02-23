@@ -20,15 +20,15 @@ class UserController extends Controller
 
         $statistics=$userRepo->getStatistics();
         $users=User::all();
-        $visit=Visit::with('visitUsers.assistant', 'visitUsers.patient', 'visitUsers.fromPatient')->get();
-        $project=Project::all();
-        $countHoursYear=CountHoursYear::all();
+        // $visit=Visit::with('visitUsers.assistant', 'visitUsers.patient', 'visitUsers.fromPatient')->get();
+        // $project=Project::all();
+        // $countHoursYear=CountHoursYear::all();
 //Log::info($users);
         return view('AllUsers.list', ["userList"=>$users,
                                         "statistics"=>$statistics,
-                                        "visitLList"=>$visit,
-                                        "projectList"=>$project,
-                                        "hoursList"=>$countHoursYear,
+                                        // "visitLList"=>$visit,
+                                        // "projectList"=>$project,
+                                        // "hoursList"=>$countHoursYear,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Lista użytkowników"]);
 

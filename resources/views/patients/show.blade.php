@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ URL::to('patients/') }}">Powrót</a>
+        <a href="{{ route('patients.index') }}">Powrót</a>
         <div class="card">
             <div class="card-header">{{ $patient->name }} {{ $patient->surname }}</div>
             <div class="card-body">
@@ -33,7 +33,7 @@
                         <td>Rola </td>
                         <td>
                             <ul>
-                                @foreach ($patient->roles as $role)
+                                @foreach ($patient->role as $role)
                                     <li>
                                         {{ $role->name }}
                                     </li>

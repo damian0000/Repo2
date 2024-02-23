@@ -24,15 +24,15 @@
                 @foreach ($patientsList as $patients)
                     <tr>
                         <th scope="row">{{ $patients->id }}</th>
-                        <td><a href="{{ URL::to('patients/' . $patients->id) }}">{{ $patients->name }}
+                        <td><a href="{{ route('patients.show', $patients->id) }}">{{ $patients->name }}
                                 {{ $patients->surname }}</a></td>
                         <td>{{ $patients->phone }}</td>
                         <td>{{ $patients->email }}</td>
                         <td>{{ $patients->status }}</td>
                         <td>
-                            <a href="{{ URL::to('patients/delete/' . $patients->id) }}"
-                                onclick="return confirm('Czy na pewno usunąć?')">Usun podopiecznego</a><br>
-                            <a href="{{ URL::to('patients/edit/' . $patients->id) }}">Edytuj podopiecznego</a>
+                            <!--<a href="{{ URL::to('patients/delete/' . $patients->id) }}"
+                                onclick="return confirm('Czy na pewno usunąć?')">Usun podopiecznego</a><br>-->
+                            <a href="{{ route('patients.edit',  $patients->id) }}">Edytuj podopiecznego</a>
                         </td>
                     </tr>
                 @endforeach

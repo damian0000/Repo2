@@ -20,11 +20,11 @@ class AddForeignAllVisitUsers extends Migration
             $table->unsignedBigInteger('from_patient_id');
             $table->unsignedBigInteger('visit_id');
 
-            $table->foreign('assistant_id', 'assistant_id_visit_user_foreign')->references('id')->on('users');
-            $table->foreign('patient_id', 'patient_id_visit_user_foreign')->references('id')->on('users');
-            $table->foreign('from_patient_id', 'from_patient_id_visit_user_foreign')->references('id')->on('users');
+            $table->foreign('assistant_id', 'vu_assistant_id_visit_user_foreign')->references('id')->on('users');
+            $table->foreign('patient_id', 'vu_patient_id_visit_user_foreign')->references('id')->on('users');
+            $table->foreign('from_patient_id', 'vu_from_patient_id_visit_user_foreign')->references('id')->on('users');
 
-            $table->foreign('visit_id', 'visit_id_visit_foreign')->references('id')->on('visits');
+            $table->foreign('visit_id', 'vu_visit_id_visit_foreign')->references('id')->on('visits');
         });
     }
 
@@ -36,10 +36,10 @@ class AddForeignAllVisitUsers extends Migration
     public function down()
     {
         Schema::table('visitUsers', function (Blueprint $table) {
-            $table->dropForeign('assistant_id_visit_user_foreign');
-            $table->dropForeign('patient_id_visit_user_foreign');
-            $table->dropForeign('from_patient_id_visit_user_foreign');
-            $table->dropForeign('visit_id_visit_foreign');
+            $table->dropForeign('vu_assistant_id_visit_user_foreign');
+            $table->dropForeign('vu_patient_id_visit_user_foreign');
+            $table->dropForeign('vu_from_patient_id_visit_user_foreign');
+            $table->dropForeign('vu_visit_id_visit_foreign');
         });
     }
 }

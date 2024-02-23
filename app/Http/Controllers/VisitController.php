@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Service;
+use App\Models\Visit;
 use App\Repositories\VisitRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
@@ -13,7 +13,6 @@ class VisitController extends Controller
     public function index(VisitRepository $visitRepo)
     {
         $visit=$visitRepo->getAll();
-
 
         return view('visits.list', ["visitList"=>$visit,
                                         "footerYear"=>date("Y"),
@@ -85,7 +84,7 @@ class VisitController extends Controller
                                         "patientsList"=>$patients,
                                         "title"=>"Edytuj usługę"]);
     }
-    public function editStore(UserRepository $userRepo, Request $request)
+    public function update(Request $request, $visitId)
     {
         $this->validate($request, [
             'date' => 'required',

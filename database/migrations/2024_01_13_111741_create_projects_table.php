@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('name', 200);
             $table->string('description')->nullable();
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
             $table->timestamps();
         });
     }

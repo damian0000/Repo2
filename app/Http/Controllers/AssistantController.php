@@ -6,13 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
-use App\Models\Company;
-use App\Models\Role;
-
-use App\Models\Visit;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
-use App\Repositories\VisitRepository;
 
 class AssistantController extends Controller
 {
@@ -29,7 +24,7 @@ class AssistantController extends Controller
 
 
     }
-    public function show(UserRepository $userRepo, VisitRepository $visitRepo, $id)
+    public function show(UserRepository $userRepo, $id)
     {
 
         $assistant=$userRepo->find($id);
@@ -40,26 +35,28 @@ class AssistantController extends Controller
 
 
     }
-    public function create(RoleRepository $roleRepo)
+    public function create(UserRepository $userRepo, RoleRepository $roleRepo)
     {
-        $companies=Company::all();
+        $userId = Auth::id();
+        $user=$userRepo->find($userId);
         $roles=$roleRepo->getRoleWithoutPatient();
-        return view('assistants.create', ["companiesList"=>$companies,
+        return view('assistants.create', ["user"=>$user,
                                         "rolesList"=>$roles,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Dodaj asystenta"]);
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
+        
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
             'surname' => 'required|min:3|max:50',
             'pesel' => 'required|numeric',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:4|max:50',
-            'phone' => 'required|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}/',
+            'phone' => 'required|regex:/^[0-9]{9}/',
             'street' => 'required',
             'post_code' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
             'city' => 'required|min:3|max:50',
@@ -80,35 +77,23 @@ class AssistantController extends Controller
             'password.min' => 'Hasło musi mieć minimum 3 znaki',
             'password.max' => 'Hasło musi mieć maksymalnie 50 znaków',
             'phone.required' => 'Wymagany telefon',
-            'phone.regex' => 'Numer telefonu w formacie 000-000-000',
+            'phone.regex' => 'Numer telefonu w formacie 000000000',
             'street.required' => 'Wymagana ulica i numer domu',
             'post_code.required' => 'Wymagany kod pocztowy',
             'post_code.regex' => 'Kod pocztowy w formacie 00-000',
             'city.required' => 'Wymagana miejscowość',
             'city.min' => 'Miejscowość musi mieć minimum 3 znaki',
             'city.max' => 'Miejscowość musi mieć maksymalnie 50 znaków',
-
-
         ]);
-        $password=$request->input('password');
-        $password_bcrypt=bcrypt($password);
-        $assistant=new User;
-        $assistant->name=$request->input('name');
-        $assistant->surname=$request->input('surname');
-        $assistant->pesel=$request->input('pesel');
-        $assistant->email=$request->input('email');
-        $assistant->password=$password_bcrypt;
-        $assistant->phone=$request->input('phone');
-        $assistant->street=$request->input('street');
-        $assistant->post_code=$request->input('post_code');
-        $assistant->city=$request->input('city');
-        $assistant->status=$request->input('status');
-        $assistant->company_id =$request->input('company');
-        $assistant->save();
 
-        $assistant->roles()->sync($request->input('roles'));
-
-        return redirect()->route('assistants');
+        $password_input=$request->input('password');
+        $pasword=bcrypt($password_input);
+        $data = $request->all();
+        $data['password']=$pasword;
+        $user = User::create($data);
+        $user->role()->sync($request->input('roles'));
+    
+        return redirect()->route('assistants.index');
 
     }
 
@@ -129,14 +114,14 @@ class AssistantController extends Controller
         // return redirect()->route('assistants');
     }
 
-    public function editStore(UserRepository $userRepo, Request $request)
+    public function update(Request $request, $userId)
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
             'surname' => 'required|min:3|max:50',
             'pesel' => 'required|numeric',
             'email' => 'required|email',
-            'phone' => 'required|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}/',
+            'phone' => 'required|regex:/^[0-9]{9}/',
             'street' => 'required',
             'post_code' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
             'city' => 'required|min:3|max:50',
@@ -153,31 +138,20 @@ class AssistantController extends Controller
             'email.required' => 'Wymagany email',
             'email.email' => 'Niepoprawny email',
             'phone.required' => 'Wymagany telefon',
-            'phone.regex' => 'Numer telefonu w formacie 000-000-000',
+            'phone.regex' => 'Numer telefonu w formacie 000000000',
             'street.required' => 'Wymagana ulica i numer domu',
             'post_code.required' => 'Wymagany kod pocztowy',
             'post_code.regex' => 'Kod pocztowy w formacie 00-000',
             'city.required' => 'Wymagana miejscowość',
             'city.min' => 'Miejscowość musi mieć minimum 3 znaki',
             'city.max' => 'Miejscowość musi mieć maksymalnie 50 znaków',
-
-
         ]);
+        $user = User::find($userId);
+        $user->update($request->all());
 
-        $assistant=User::find($request->input('id'));
-        $assistant->name=$request->input('name');
-        $assistant->surname=$request->input('surname');
-        $assistant->pesel=$request->input('pesel');
-        $assistant->email=$request->input('email');
-        $assistant->phone=$request->input('phone');
-        $assistant->street=$request->input('street');
-        $assistant->post_code=$request->input('post_code');
-        $assistant->city=$request->input('city');
-        $assistant->status=$request->input('status');
-        $assistant->save();
-
-        $assistant->roles()->sync($request->input('roles'));
-
-        return redirect()->route('assistants');
+        $updatedUser = User::find($user->id);
+        // Synchronizuj role
+        $updatedUser->role()->sync($request->input('roles'));
+        return redirect()->route('assistants.index');
     }
 }

@@ -19,25 +19,5 @@ class VisitUser extends Model
         'updated_at'
     ];
 
-    public function assistant()
-    {
-        return $this->belongsTo(User::class, 'assistant_id');
-    }
-
-    public function patient()
-    {
-        return $this->belongsTo(User::class, 'patient_id');
-    }
-
-    public function fromPatient()
-    {
-        return $this->belongsTo(User::class, 'from_patient_id');
-    }
-
-    public function visit()
-    {
-        return $this->belongsTo(Visit::class);
-    }
-
 
 }

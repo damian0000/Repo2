@@ -9,7 +9,7 @@
 @section('content')
     <div class="container">
         <h1>Dodaj usługę</h1>
-        <form action="{{ route('save_visits') }}" method="POST" role="form">
+        <form action="{{ route('visits.store') }}" method="POST" role="form">
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="form-group">
                 <div class="form-group">

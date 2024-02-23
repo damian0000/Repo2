@@ -1,8 +1,8 @@
 @extends('template')
 
-@section('title')
-    @if (isset($title))
-        - {{ $title }}
+@section('id')
+    @if (isset($id))
+        - {{ $id }}
     @endif
 @endsection
 
@@ -10,69 +10,66 @@
     <div class="container">
         <h1>Edytuj asystenta</h1>
 
-        <form action="{{ route('save_edit_assistants') }}" method="POST" role="form">
-
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <form action="{{ route('assistants.update',  ['userId' => $assistant->id]) }} " method="POST" role="form">
+            @csrf
+            @method("PUT")
             <input type="hidden" name="id" value="{{ $assistant->id }}" />
             <div class="form-group">
                 <label for="name">Imię</label>
-                <input type="text" class="form-control" title="imię" name="name" value="{{ $assistant->name }}" />
+                <input type="text" class="form-control" id="name" name="name" value="{{ $assistant->name }}" />
             </div>
             @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Nazwisko">Nazwisko</label>
-                <input type="text" class="form-control" title="Nazwisko" name="surname"
+                <label for="surname">Nazwisko</label>
+                <input type="text" class="form-control" id="surname" name="surname"
                     value="{{ $assistant->surname }}" />
             </div>
             @error('surname')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Pesel">Pesel</label>
-                <input type="text" class="form-control" title="Pesel" name="pesel" value="{{ $assistant->pesel }}" />
+                <label for="pesel">Pesel</label>
+                <input type="text" class="form-control" id="pesel" name="pesel" value="{{ $assistant->pesel }}" />
             </div>
             @error('pesel')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Email">Email</label>
-                <input type="text" class="form-control" title="Email" name="email" value="{{ $assistant->email }}" />
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ $assistant->email }}" />
             </div>
             @error('email')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-            @error('password')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
             <div class="form-group">
-                <label for="Telefon">Telefon</label>
-                <input type="text" class="form-control" title="Telefon" name="phone"
+                <label for="phone">Telefon</label>
+                <input type="text" class="form-control" id="phone" name="phone"
                     value="{{ $assistant->phone }}" />
             </div>
             @error('phone')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Ulica">Ulica</label>
-                <input type="text" class="form-control" title="Ulica" name="street"
+                <label for="street">Ulica</label>
+                <input type="text" class="form-control" id="street" name="street"
                     value="{{ $assistant->street }}" />
             </div>
             @error('street')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Kod pocztowy">Kod pocztowy</label>
-                <input type="text" class="form-control" title="Kod pocztowy" name="post_code"
+                <label for="post_code">Kod pocztowy</label>
+                <input type="text" class="form-control" id="post_code" name="post_code"
                     value="{{ $assistant->post_code }}" />
             </div>
             @error('post_code')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="Miejscowość">Miejscowość</label>
-                <input type="text" class="form-control" title="Miejscowość" name="city"
+                <label for="city">Miejscowość</label>
+                <input type="text" class="form-control" id="city" name="city"
                     value="{{ $assistant->city }}" />
             </div>
             @error('city')
@@ -82,7 +79,7 @@
                 <label for="Rola">Rola</label>
                 @foreach ($rolesList as $role)
                     <div class="form-check">
-                        @if ($assistant->roles->contains($role->id))
+                        @if ($assistant->role->contains($role->id))
                             <input class="form-check-input" type="checkbox" value="{{ $role->id }}" name="roles[]"
                                 checked>
                             <label class="form-check-label" for="{{ $role->name }}">
@@ -99,27 +96,27 @@
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
-                @if ($assistant->status == 'Active')
+                @if ($assistant->status == 'Pracujący')
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Active" name="status" id="status"
+                        <input class="form-check-input" type="radio" value="Pracujący" name="status" id="status"
                             checked />
-                        <label class="form-check-label" for="status">Aktywny</label>
+                        <label class="form-check-label" for="status">Pracujący</label>
                     </div>
 
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Inactive" name="status"
+                        <input class="form-check-input" type="radio" value="Urlop" name="status"
                             id="status" />
-                        <label class="form-check-label" for="status">Niektywny</label>
+                        <label class="form-check-label" for="status">Urlop</label>
                     </div>
                 @else
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Active" name="status" id="status" />
-                        <label class="form-check-label" for="status">Aktywny</label>
+                        <input class="form-check-input" type="radio" value="Pracujący" name="status" id="status" />
+                        <label class="form-check-label" for="status">Pracujący</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="Inactive" name="status" id="status"
+                        <input class="form-check-input" type="radio" value="Urlop" name="status" id="status"
                             checked />
-                        <label class="form-check-label" for="status">Niektywny</label>
+                        <label class="form-check-label" for="status">Urlop</label>
                     </div>
                 @endif
             </div>

@@ -28,25 +28,28 @@
                 @foreach ($visitList as $visit)
                     <tr>
                         <th scope="row">{{ $visit->id }}</th>
-                        <td>{{ $visit->assistant->name }} {{ $visit->assistant->surname }}</td>
-                        <td>{{ $visit->patient->name }} {{ $visit->patient->surname }}</td>
-
-                        @if ($visit->prevPatient)
-                            <td>
-                                {{ $visit->prevPatient->name }} {{ $visit->prevPatient->surname }}
-                            </td>
-                            <td>{{ $visit->travel_time }}min</td>
-                        @else
-                            <td>--</td>
-                            <td>--</td>
-                        @endif
+                        <td>
+                            @foreach($visit->assistant as $assistant)
+                                {{ $assistant->name }} {{ $assistant->surname }}
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($visit->patient as $patient)
+                                {{ $patient->name }} {{ $patient->surname }}
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach($visit->prevPatient as $prevPatient)
+                                {{ $prevPatient->name }} {{ $prevPatient->surname }}
+                            @endforeach
+                        </td>
+                        <td>{{ $visit->travel_time }}</td>
                         <td>
                             {{ \Carbon\Carbon::parse($visit->date_visit)->format('d.m.Y') }}
                         </td>
                         <td>
                             {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->start_time_visit)->format('H:i') }}
                         </td>
-
                         <td>
                             {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->end_time_visit)->format('H:i') }}
                         </td>
@@ -54,14 +57,12 @@
                             {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->time_visit)->format('H:i') }}
                         </td>
                         <td>
-                            <a href="{{ URL::to('visits/delete/' . $visit->id) }}"
-                                onclick="return confirm('Czy na pewno usunąć?')">Usun usługę</a><br>
-                            <a href="{{ URL::to('visits/edit/' . $visit->id) }}">Edytuj usługę</a>
+                            <a href="{{ route('visits.edit',  $visit->id) }}">Edytuj usługę</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <p><a href="{{ URL::to('visits/pdf') }}">Generate PDF</a></p>
+       <!-- <p><a href="{{ URL::to('visits/pdf') }}">Generate PDF</a></p>-->
     </div>
 @endsection

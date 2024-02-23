@@ -22,16 +22,17 @@
         @if (isset($community))
             <div class="alert alert-danger">{{ $community }}</div>
         @endif
-        <form action="{{ route('save_company') }}" method="POST" role="form">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <form action="{{ route('companies.update',  ['companyId' => $company->id]) }}" method="POST" role="form">
+            @csrf
+            @method("PUT")
             <div class="form-group">
                 <label for="name">Nazwa organizacji</label>
-                <input type="text" class="form-control" name="name" />
+                <input type="text" class="form-control" name="name" value="{{ $company->name }}" />
                 @error('name')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
-            <input type="submit" class="btn btn-primary" value="Dodaj" />
+            <input type="submit" class="btn btn-primary" value="Zaktualizuj" />
         </form>
     </div>
 @endsection

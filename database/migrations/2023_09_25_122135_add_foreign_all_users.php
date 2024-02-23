@@ -15,7 +15,7 @@ class AddForeignAllUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id', 'users_companies_id_foreign')->references('id')->on('companies');
+            $table->foreign('company_id', 'u_users_companies_id_foreign')->references('id')->on('companies');
         });
     }
 
@@ -27,7 +27,7 @@ class AddForeignAllUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_companies_id_foreign');
+            $table->dropForeign('u_users_companies_id_foreign');
         });
     }
 }

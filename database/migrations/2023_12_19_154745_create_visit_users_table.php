@@ -15,7 +15,7 @@ class CreateVisitUsersTable extends Migration
     {
         Schema::create('visitUsers', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_delete');
+            $table->boolean('is_delete')->default(0);
             $table->timestamps();
         });
     }

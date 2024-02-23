@@ -22,10 +22,5 @@ class DatabaseSeeder extends Seeder
         $this->call(VisitsTableSeeder::class);
         $this->call(VisitUsersTableSeeder::class);
         $this->call(ProjectUsersTableSeeder::class);
-
-
-
-
-
     }
 }

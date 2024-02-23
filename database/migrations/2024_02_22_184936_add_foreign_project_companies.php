@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignAllProject extends Migration
+class AddForeignProjectCompanies extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class AddForeignAllProject extends Migration
 
             $table->unsignedBigInteger('company_id');
 
-            $table->foreign('company_id', 'company_id_company_foreign')->references('id')->on('companies');
+            $table->foreign('company_id', 'pro_company_id_companies_foreign')->references('id')->on('companies');
         });
     }
 
@@ -29,7 +29,7 @@ class AddForeignAllProject extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dropForeign('company_id_company_foreign');
+            $table->dropForeign('pro_company_id_companies_foreign');
             });
     }
 }

@@ -26,16 +26,18 @@ class Visit extends Model
         return $this->hasMany(VisitUser::class);
     }
     
-    // public function assistant()
-    // {
-    //     return $this->belongsTo(User::class, 'assistant_id');
-    // }
-    // public function patient()
-    // {
-    //     return $this->belongsTo(User::class, 'patient_id');
-    // }
-    // public function prevPatient()
-    // {
-    //     return $this->belongsTo(User::class, 'from_patient_id');
-    // }
+    public function assistant()
+    {
+        return $this->belongsToMany(User::class, 'visitusers', 'visit_id', 'assistant_id');
+    }
+
+
+    public function patient()
+    {
+        return $this->belongsToMany(User::class, 'visitusers', 'visit_id', 'patient_id');
+    }
+    public function prevPatient()
+    {
+        return $this->belongsToMany(User::class,  'visitusers', 'visit_id', 'from_patient_id');
+    }
 }

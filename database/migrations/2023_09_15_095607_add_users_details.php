@@ -21,8 +21,8 @@ class AddUsersDetails extends Migration
             $table->string('street', 30);
             $table->string('post_code', 6);
             $table->string('city', 30);
-            $table->string('status', 30);
-            $table->boolean('is_delete');
+            $table->string('status', 30)->default('Pracujący');
+            $table->boolean('is_delete')->default(0);
         });
     }
 
