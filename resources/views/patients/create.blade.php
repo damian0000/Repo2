@@ -91,6 +91,17 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
+                <label for="company">Projekty</label>
+                @foreach ($projectList as $project)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="{{ $project->id }}" name="projects[]">
+                        <label class="form-check-label" for="{{ $project->name }}">
+                            {{ $project->name }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+            <div class="form-group">
                 <label for="company">Organizacja</label>
                 
                 <select id="company" class="form-select" name="company_id">

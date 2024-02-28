@@ -21,16 +21,12 @@ class Company extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class, 'company_id');
+        return $this->hasMany(User::class, 'company_id');
     }
 
     public function project()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'company_id');
     }
 
-    // public function project()
-    // {
-    //     return $this->belongsTo(User::class, 'company_id');
-    // }
 }

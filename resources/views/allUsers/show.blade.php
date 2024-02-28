@@ -33,10 +33,8 @@
                         <td>Rola </td>
                         <td>
                             <ul>
-                                @foreach ($user->roles as $role)
-                                    <li>
-                                        {{ $role->name }}
-                                    </li>
+                                @foreach ($user->role as $role)
+                                    <li>{{ $role->name }}</li>
                                 @endforeach
                             </ul>
                         </td>

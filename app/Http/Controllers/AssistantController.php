@@ -12,12 +12,30 @@ use App\Repositories\RoleRepository;
 class AssistantController extends Controller
 {
 
+    /**
+     * Undocumented function
+     *
+     * @param UserRepository $userRepo
+     * @return View
+     */
     public function index(UserRepository $userRepo)
     {
-        $users=$userRepo->getAllAsistants();
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $company=$user->company;
+
+        $roleId=2;
+        // Pobierz listę wszystkich asystentów z firmy
+        $assistants = $company->user()->whereHas('role', function ($query) use ($roleId) {
+            $query->where('role_id', $roleId);
+        })->get();
+
+        
+        //$users=$userRepo->getAllAsistants();
+        
         $statistics=$userRepo->getStatistics();
 
-        return view('assistants.list', ["assistantList"=>$users,
+        return view('assistants.list', ["assistantList"=>$assistants,
                                         "statistics"=>$statistics,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Lista asystentów"]);
@@ -40,8 +58,11 @@ class AssistantController extends Controller
         $userId = Auth::id();
         $user=$userRepo->find($userId);
         $roles=$roleRepo->getRoleWithoutPatient();
+        $company=$user->company;
+        $projects=$company->project;
         return view('assistants.create', ["user"=>$user,
                                         "rolesList"=>$roles,
+                                        "projectList"=>$projects,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Dodaj asystenta"]);
     }
@@ -49,7 +70,6 @@ class AssistantController extends Controller
 
     public function store(Request $request, User $user)
     {
-        
         $this->validate($request, [
             'name' => 'required|min:3|max:50',
             'surname' => 'required|min:3|max:50',
@@ -92,6 +112,7 @@ class AssistantController extends Controller
         $data['password']=$pasword;
         $user = User::create($data);
         $user->role()->sync($request->input('roles'));
+        $user->project()->sync($request->input('projects'));
     
         return redirect()->route('assistants.index');
 
@@ -101,8 +122,11 @@ class AssistantController extends Controller
     {
         $assistant=$userRepo->find($id);
         $roles=$roleRepo->getRoleWithoutPatient();
+        $company=$assistant->company;
+        $projects=$company->project;
         return view('assistants.edit', ["assistant"=>$assistant,
                                         "rolesList"=>$roles,
+                                        "projectList"=>$projects,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Edycja asystenta"]);
     }
@@ -152,6 +176,7 @@ class AssistantController extends Controller
         $updatedUser = User::find($user->id);
         // Synchronizuj role
         $updatedUser->role()->sync($request->input('roles'));
+        $updatedUser->project()->sync($request->input('projects'));
         return redirect()->route('assistants.index');
     }
 }

@@ -26,6 +26,13 @@
                         <td>{{ $patient->street }}, {{ $patient->post_code }} {{ $patient->city }}</td>
                     </tr>
                     <tr>
+                        <td>Projekty </td>
+                        <td>
+                            @foreach ($patient->project as $object)
+                                {{ $object->name }},
+                            @endforeach</td>
+                    </tr>
+                    <tr>
                         <td>Organizacja </td>
                         <td>{{ $patient->company->name }}</td>
                     </tr>

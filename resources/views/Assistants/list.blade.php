@@ -29,6 +29,7 @@
                         <td>{{ $assistant->phone }}</td>
                         <td>{{ $assistant->email }}</td>
                         <td>{{ $assistant->status }}</td>
+                        
                         <td>
                             <!--<a href="{{ URL::to('assistants/delete/' . $assistant->id) }}"
                                 onclick="return confirm('Czy na pewno usunąć?')">Usun asystenta</a><br>-->

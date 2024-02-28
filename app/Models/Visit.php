@@ -40,4 +40,9 @@ class Visit extends Model
     {
         return $this->belongsToMany(User::class,  'visitusers', 'visit_id', 'from_patient_id');
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
 }

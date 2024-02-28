@@ -8,16 +8,28 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
+use Mpdf\Tag\Dd;
 
 class PatientController extends Controller
 {
     public function index(UserRepository $userRepo)
     {
-        $users=$userRepo->getAlPatients();
+        //$users=$userRepo->getAlPatients();
+
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $company=$user->company;
+
+        $roleId=3;
+        // Pobierz listę wszystkich pacjentów z firmy
+        $patient = $company->user()->whereHas('role', function ($query) use ($roleId) {
+            $query->where('role_id', $roleId);
+        })->get();
+
         $statistics=$userRepo->getStatistics();
 
 
-        return view('patients.list', ["patientsList"=>$users,
+        return view('patients.list', ["patientsList"=>$patient,
                                         "statistics"=>$statistics,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Lista pacjentów"]);
@@ -36,7 +48,10 @@ class PatientController extends Controller
     {
         $userId = Auth::id();
         $user=$userRepo->find($userId);
+        $company=$user->company;
+        $projects=$company->project;
         return view('patients.create', ["user"=>$user,
+                                        "projectList"=>$projects,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Dodaj pacjenta"]);
     }
@@ -88,13 +103,17 @@ class PatientController extends Controller
         $data['password']=$pasword;
         $user = User::create($data);
         $user->role()->sync('3');
+        $user->project()->sync($request->input('projects'));
         return redirect()->route('patients.index');
     }
 
     public function edit(UserRepository $userRepo, $id)
     {
         $patient=$userRepo->find($id);
+        $company=$patient->company;
+        $projects=$company->project;
         return view('patients.edit', ["patient"=>$patient,
+                                        "projectList"=>$projects,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Edycja danych podopiecznego"]);
     }
@@ -144,6 +163,7 @@ class PatientController extends Controller
         // Synchronizuj role
         $updatedUser->role()->sync('3');
 
+        $updatedUser->project()->sync($request->input('projects'));
         return redirect()->route('patients.index');
     }
 

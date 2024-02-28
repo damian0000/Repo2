@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Visit;
+use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\VisitRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
@@ -12,16 +15,44 @@ class VisitController extends Controller
 {
     public function index(VisitRepository $visitRepo)
     {
-        $visit=$visitRepo->getAll();
-
-        return view('visits.list', ["visitList"=>$visit,
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $company=$user->company;
+        //$projects = $company->project;
+        // Pobierz identyfikator firmy
+        $companyId = $company->id;
+        // Pobierz wszystkie projekty przypisane do danej firmy
+        $projects = Company::find($companyId)->project;
+        // Zainicjuj pustą kolekcję na wizyty
+        $visits = collect();
+        // Iteruj przez każdy projekt i pobierz jego wizyty
+        foreach ($projects as $project) {
+            $visits = $visits->merge(Visit::where('project_id', $project->id)->get());
+        }
+        return view('visits.list', ["visitList"=>$visits,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Usługi u podopiecznych"]);
     }
     public function create(UserRepository $userRepo)
     {
-        $assistants=$userRepo->getAllAsistants();
-        $patients=$userRepo->getAlPatients();
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $company=$user->company;
+
+        $assistantsRoleID=2;
+        // Pobierz listę wszystkich asystentów z firmy
+        $assistants = $company->user()->whereHas('role', function ($query) use ($assistantsRoleID) {
+            $query->where('role_id', $assistantsRoleID);
+        })->get();
+
+        $patientsRoleID=3;
+        // Pobierz listę wszystkich pacjentów z firmy
+        $patients = $company->user()->whereHas('role', function ($query) use ($patientsRoleID) {
+            $query->where('role_id', $patientsRoleID);
+        })->get();
+
+        //$assistants=$userRepo->getAllAsistants();
+        //$patients=$userRepo->getAlPatients();
 
         return view('visits.create', ["footerYear"=>date("Y"),
                                         "assistantsList"=>$assistants,

@@ -21,6 +21,7 @@
                     <th scope="col">Od godz.</th>
                     <th scope="col">Do godz</th>
                     <th scope="col">Całk. czas</th>
+                    <th scope="col">Projekt</th>
                     <th scope="col">Operacje</th>
                 </tr>
             </thead>
@@ -56,6 +57,7 @@
                         <td>
                             {{ \Carbon\Carbon::createFromFormat('H:i:s', $visit->time_visit)->format('H:i') }}
                         </td>
+                        <td>{{ $visit->project->name }}</td>
                         <td>
                             <a href="{{ route('visits.edit',  $visit->id) }}">Edytuj usługę</a>
                         </td>

@@ -14,7 +14,10 @@ class ProjectController extends Controller
 {
     public function index(ProjectRepository $projectRepo)
     {
-       $project=$projectRepo->getAll();
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $company=$user->company;
+        $project=$company->project;
        
         return view('projects.list', ["projectList"=>$project,
                                         "footerYear"=>date("Y"),

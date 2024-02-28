@@ -262,5 +262,20 @@ class UsersTableSeeder extends Seeder
             'status'=>'Aktywny',
             'company_id'=>1
         ]);
+
+        //17
+        DB::table('users')->insert([
+            'name'=>'Stanisław',
+            'email'=>"staszek.wrona@wp.pl",
+            'password'=>bcrypt('password'),
+            'surname'=>"wrona",
+            'pesel'=>'95091285511',
+            'phone'=>'479745785',
+            'street'=>'Kcyńska 8',
+            'post_code'=>'62-100',
+            'city'=>'Wągrowiec',
+            'status'=>'Aktywny',
+            'company_id'=>2
+        ]);
     }
 }

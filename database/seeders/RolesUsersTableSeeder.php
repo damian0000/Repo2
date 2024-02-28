@@ -21,7 +21,7 @@ class RolesUsersTableSeeder extends Seeder
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>1,
             'user_id'=>2,
             'is_delete'=>0
         ]);
@@ -116,6 +116,11 @@ class RolesUsersTableSeeder extends Seeder
             'is_delete'=>0
         ]);
 
-
+        
+        DB::table('roleUsers')->insert([
+            'role_id'=>2,
+            'user_id'=>17,
+            'is_delete'=>0
+        ]);
     }
 }

@@ -24,6 +24,7 @@ class VisitsTableSeeder extends Seeder
             'time_visit'=>Carbon::createFromFormat('H:i', '01:30')->toDateTimeString(),
             'description_visit'=>'',
             'additional_notes'=>'lorem ipsum',
+            'project_id'=>1,
             'is_delete'=>0
         ]);
         DB::table('visits')->insert([
@@ -34,6 +35,7 @@ class VisitsTableSeeder extends Seeder
             'time_visit'=>Carbon::createFromFormat('H:i', '01:30')->toDateTimeString(),
             'description_visit'=>'',
             'additional_notes'=>'lorem ipsum',
+            'project_id'=>1,
             'is_delete'=>0
         ]);
 

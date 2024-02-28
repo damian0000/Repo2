@@ -20,18 +20,15 @@ class Project extends Model
         'updated_at',
         'is_delete'
     ];
-    public function projectUsers()
-    {
-        return $this->hasMany(ProjectUser::class);
-    }
-
-    // public function company()
+    // public function projectUsers()
     // {
-    //     return $this->belongsToMany(Company::class, 'companyprojects', 'project_id', 'company_id');
+    //     return $this->hasMany(ProjectUser::class);
     // }
 
-
-
+    public function visit()
+    {
+        return $this->hasMany(Visit::class, 'project_id');
+    }
     
     public static function findName($name)
     {

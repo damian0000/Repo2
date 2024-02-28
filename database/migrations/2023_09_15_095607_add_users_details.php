@@ -16,9 +16,9 @@ class AddUsersDetails extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('surname', 30);
             $table->string('pesel', 11);
-            $table->string('disability')->nullable();
+            $table->text('disability')->nullable();
             $table->string('phone', 15);
-            $table->string('street', 30);
+            $table->string('street', 70);
             $table->string('post_code', 6);
             $table->string('city', 30);
             $table->string('status', 30)->default('Pracujący');

@@ -95,6 +95,25 @@
                 @endforeach
             </div>
             <div class="form-group">
+                <label for="company">Projekty</label>
+                @foreach ($projectList as $project)
+                    <div class="form-check">
+                        @if ($assistant->project->contains($project->id))
+                            <input class="form-check-input" type="checkbox" value="{{ $project->id }}" name="projects[]"
+                                checked/>
+                            <label class="form-check-label" for="{{ $project->name }}">
+                                {{ $project->name }}
+                            </label>
+                        @else
+                            <input class="form-check-input" type="checkbox" value="{{ $project->id }}" name="projects[]"/>
+                            <label class="form-check-label" for="{{ $project->name }}">
+                                {{ $project->name }}
+                            </label>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+            <div class="form-group">
                 <label for="status">Status</label>
                 @if ($assistant->status == 'Pracujący')
                     <div class="form-check">
@@ -121,7 +140,7 @@
                 @endif
             </div>
 
-            <input type="submit" class="btn btn-primary" value="Dodaj" />
+            <input type="submit" class="btn btn-primary" value="Zaktualizuj" />
         </form>
     </div>
 @endsection
