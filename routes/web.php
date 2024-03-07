@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/save', 'store')->name('store');
         Route::put('/update/{userId}', 'update')->name('update');
         Route::get('/{id}', 'show')->name('show');
+        Route::get('/addPatient/{id}', 'addPatient')->name('addPatient');
         //Route::get('/delete/{id}',  'delete')->name('delete');
     }));
 

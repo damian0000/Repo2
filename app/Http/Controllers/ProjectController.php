@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\User;
-use App\Models\CompanyProject;
+use App\Http\Requests\UpsertProjectRequest;
 use App\Repositories\ProjectRepository;
 use Illuminate\Http\Request;
 
@@ -30,18 +30,8 @@ class ProjectController extends Controller
                                         "title"=>"Dodaj projekt"]);
     }
 
-    public function store(Request $request)
+    public function store(UpsertProjectRequest $request)
     {
-
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50'
-        ],
-        [
-            'name.required' => 'Wymagana nazwa projektu',
-            'name.min' => 'Nazwa musi mieć minimum 3 znaki',
-            'name.max' => 'Nazwa musi mieć maksymalnie 50 znaków',
-            'name.unique' => 'Podana organizacja już istnieje'
-        ]);
 
         $userId = Auth::id();
         $user = User::find($userId);
@@ -51,12 +41,12 @@ class ProjectController extends Controller
         //dd($project);
         $query=Project::where([
             ['company_id', '=', $company_id],
-            ['name', '=', $request->input('name')]
+            ['name', '=', $request->validated()]
         ]);
         if(!$query->exists())
         {
-            $project=new Project;
-            $project->name=$request->input('name');
+            $data=$request->validated();
+            $project=new Project($data);
             $project->company_id=$company_id;
             $project->save();
             return redirect()->route('projects.index');
@@ -77,21 +67,10 @@ class ProjectController extends Controller
                                         "title"=>"Edycja projektu"]);
     }
 
-    public function update(Request $request, $projectId)
+    public function update(UpsertProjectRequest $request, $projectId)
     {
-
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50|unique:projects,name'
-        ],
-        [
-            'name.required' => 'Wymagana nazwa projektu',
-            'name.min' => 'Nazwa musi mieć minimum 3 znaki',
-            'name.max' => 'Nazwa musi mieć maksymalnie 50 znaków',
-            'name.unique' => 'Podana organizacja już istnieje'
-        ]);
-
         $project = Project::find($projectId);
-        $project->update($request->all());
+        $project->update($request->validated());
     
         return redirect()->route('projects.index');
     }

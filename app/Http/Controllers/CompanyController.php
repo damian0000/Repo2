@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpsertCompanyRequest;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Repositories\CompanyRepository;
@@ -23,20 +24,10 @@ class CompanyController extends Controller
                                         "title"=>"Dodaj organizację"]);
     }
 
-    public function store(Request $request)
+    public function store(UpsertCompanyRequest $request)
     {
 
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50|unique:companies,name'
-        ],
-        [
-            'name.required' => 'Wymagana nazwa firmy',
-            'name.min' => 'Nazwa musi mieć minimum 3 znaki',
-            'name.max' => 'Nazwa musi mieć maksymalnie 50 znaków',
-            'name.unique' => 'Podana organizacja już istnieje'
-        ]);
-
-        Company::create($request->all());
+        Company::create($request->validated());
     
         return redirect()->route('companies.index');
     }
@@ -50,21 +41,11 @@ class CompanyController extends Controller
                                         "title"=>"Edycja organizacji"]);
     }
 
-    public function update(Request $request, $companyId)
+    public function update(UpsertCompanyRequest $request, $companyId)
     {
 
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50|unique:companies,name'
-        ],
-        [
-            'name.required' => 'Wymagana nazwa firmy',
-            'name.min' => 'Nazwa musi mieć minimum 3 znaki',
-            'name.max' => 'Nazwa musi mieć maksymalnie 50 znaków',
-            'name.unique' => 'Podana organizacja już istnieje'
-        ]);
-
         $company = Company::find($companyId);
-        $company->update($request->all());
+        $company->update($request->validated());
     
         return redirect()->route('companies.index');
     }

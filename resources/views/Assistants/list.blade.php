@@ -33,7 +33,8 @@
                         <td>
                             <!--<a href="{{ URL::to('assistants/delete/' . $assistant->id) }}"
                                 onclick="return confirm('Czy na pewno usunąć?')">Usun asystenta</a><br>-->
-                            <a href="{{ route('assistants.edit', $assistant->id) }}">Edytuj asystenta</a>
+                            <a href="{{ route('assistants.edit', $assistant->id) }}">Edytuj asystenta</a><br>
+                            <a href="{{ route('assistants.addPatient', $assistant->id) }}">Dodaj podopiecznego</a>
                         </td>
                     </tr>
                 @endforeach

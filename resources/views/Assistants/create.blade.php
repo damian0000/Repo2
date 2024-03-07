@@ -15,63 +15,63 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
             <div class="form-group">
                 <label for="name">Imię</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" />
+                <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}" />
             </div>
             @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="surname">Nazwisko</label>
-                <input type="text" class="form-control" id="surname" name="surname" value="{{ old('surname') }}" />
+                <input type="text" class="form-control" id="surname" name="surname" required value="{{ old('surname') }}" />
             </div>
             @error('surname')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="pesel">Pesel</label>
-                <input type="text" class="form-control" id="pesel" name="pesel" value="{{ old('pesel') }}" />
+                <input type="text" class="form-control" id="pesel" name="pesel" required value="{{ old('pesel') }}" />
             </div>
             @error('pesel')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" />
+                <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}" />
             </div>
             @error('email')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="password">Hasło</label>
-                <input type="password" class="form-control" id="password" name="password" />
+                <input type="password" class="form-control" id="password" name="password" required />
             </div>
             @error('password')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="phone">Telefon</label>
-                <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" />
+                <input type="text" class="form-control" id="phone" name="phone" required value="{{ old('phone') }}" />
             </div>
             @error('phone')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="street">Ulica</label>
-                <input type="text" class="form-control" id="street" name="street" value="{{ old('street') }}" />
+                <input type="text" class="form-control" id="street" name="street" required value="{{ old('street') }}" />
             </div>
             @error('street')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="post_code">Kod pocztowy</label>
-                <input type="text" class="form-control" id="post_code" name="post_code" value="{{ old('post_code') }}" />
+                <input type="text" class="form-control" id="post_code" name="post_code" required value="{{ old('post_code') }}" />
             </div>
             @error('post_code')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="city">Miejscowość</label>
-                <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" />
+                <input type="text" class="form-control" id="city" name="city" required value="{{ old('city') }}" />
             </div>
             @error('city')
                 <div class="alert alert-danger">{{ $message }}</div>

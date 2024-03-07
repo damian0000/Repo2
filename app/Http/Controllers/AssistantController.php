@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
+use App\Models\AssistantPatient;
+use App\Http\Requests\StoreAssistantRequest;
+use App\Http\Requests\UpdateAssistantRequest;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
+
 
 class AssistantController extends Controller
 {
@@ -24,7 +28,7 @@ class AssistantController extends Controller
         $user = User::find($userId);
         $company=$user->company;
 
-        $roleId=2;
+        $roleId=3;
         // Pobierz listę wszystkich asystentów z firmy
         $assistants = $company->user()->whereHas('role', function ($query) use ($roleId) {
             $query->where('role_id', $roleId);
@@ -47,6 +51,18 @@ class AssistantController extends Controller
 
         $assistant=$userRepo->find($id);
 
+        $assistant_id=$assistant->id;
+        
+        $assistantPatients = AssistantPatient::with(['patient'])
+            ->where('assistant_id', $assistant_id)
+            ->where('project_id', 1)
+            ->get();
+
+        foreach ($assistantPatients as $assistantPatient) {
+            echo "Dane podopiecznego: " . $assistantPatient->patient->name . " " . $assistantPatient->patient->surname . "\n";
+            // Tutaj możesz wyświetlić inne dane dotyczące asystenta i podopiecznego
+        }
+
         return view('assistants.show', ["assistant"=>$assistant,
                                         "footerYear"=>date("Y"),
                                         "title"=>"Asystent"]);
@@ -68,49 +84,20 @@ class AssistantController extends Controller
     }
 
 
-    public function store(Request $request, User $user)
+    public function store(StoreAssistantRequest $request, User $user, UserRepository $userRepo)
     {
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50',
-            'surname' => 'required|min:3|max:50',
-            'pesel' => 'required|numeric',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:4|max:50',
-            'phone' => 'required|regex:/^[0-9]{9}/',
-            'street' => 'required',
-            'post_code' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
-            'city' => 'required|min:3|max:50',
-        ],
-        [
-            'name.required' => 'Wymagane imię',
-            'name.min' => 'Imię musi mieć minimum 3 znaki',
-            'name.max' => 'Imię musi mieć maksymalnie 50 znaków',
-            'surname.required' => 'Wymagane nazwisko',
-            'surname.min' => 'Nazwisko musi mieć minimum 3 znaki',
-            'surname.max' => 'Nazwisko musi mieć maksymalnie 50 znaków',
-            'pesel.required' => 'Wymagany pesel',
-            'pesel.numeric' => 'Pesel cyfry',
-            'email.required' => 'Wymagany email',
-            'email.email' => 'Niepoprawny email',
-            'email.unique' => 'Podany email już istnieje',
-            'password.required' => 'Wymagane hasło',
-            'password.min' => 'Hasło musi mieć minimum 3 znaki',
-            'password.max' => 'Hasło musi mieć maksymalnie 50 znaków',
-            'phone.required' => 'Wymagany telefon',
-            'phone.regex' => 'Numer telefonu w formacie 000000000',
-            'street.required' => 'Wymagana ulica i numer domu',
-            'post_code.required' => 'Wymagany kod pocztowy',
-            'post_code.regex' => 'Kod pocztowy w formacie 00-000',
-            'city.required' => 'Wymagana miejscowość',
-            'city.min' => 'Miejscowość musi mieć minimum 3 znaki',
-            'city.max' => 'Miejscowość musi mieć maksymalnie 50 znaków',
-        ]);
+        $userId = Auth::id();
+        $user=$userRepo->find($userId);
+        $company=$user->company->id;
 
         $password_input=$request->input('password');
         $pasword=bcrypt($password_input);
-        $data = $request->all();
+        $data = $request->validated();
         $data['password']=$pasword;
-        $user = User::create($data);
+        $user = new User($data);
+        $user->company_id=$company;
+        $user->save();
+
         $user->role()->sync($request->input('roles'));
         $user->project()->sync($request->input('projects'));
     
@@ -138,45 +125,23 @@ class AssistantController extends Controller
         // return redirect()->route('assistants');
     }
 
-    public function update(Request $request, $userId)
+    public function update(UpdateAssistantRequest $request, User $user, $userId)
     {
-        $this->validate($request, [
-            'name' => 'required|min:3|max:50',
-            'surname' => 'required|min:3|max:50',
-            'pesel' => 'required|numeric',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/^[0-9]{9}/',
-            'street' => 'required',
-            'post_code' => 'required|regex:/^[0-9]{2}-[0-9]{3}/',
-            'city' => 'required|min:3|max:50',
-        ],
-        [
-            'name.required' => 'Wymagane imię',
-            'name.min' => 'Imię musi mieć minimum 3 znaki',
-            'name.max' => 'Imię musi mieć maksymalnie 50 znaków',
-            'surname.required' => 'Wymagane nazwisko',
-            'surname.min' => 'Nazwisko musi mieć minimum 3 znaki',
-            'surname.max' => 'Nazwisko musi mieć maksymalnie 50 znaków',
-            'pesel.required' => 'Wymagany pesel',
-            'pesel.numeric' => 'Pesel cyfry',
-            'email.required' => 'Wymagany email',
-            'email.email' => 'Niepoprawny email',
-            'phone.required' => 'Wymagany telefon',
-            'phone.regex' => 'Numer telefonu w formacie 000000000',
-            'street.required' => 'Wymagana ulica i numer domu',
-            'post_code.required' => 'Wymagany kod pocztowy',
-            'post_code.regex' => 'Kod pocztowy w formacie 00-000',
-            'city.required' => 'Wymagana miejscowość',
-            'city.min' => 'Miejscowość musi mieć minimum 3 znaki',
-            'city.max' => 'Miejscowość musi mieć maksymalnie 50 znaków',
-        ]);
         $user = User::find($userId);
-        $user->update($request->all());
+        $user->update($request->validated());
 
         $updatedUser = User::find($user->id);
         // Synchronizuj role
         $updatedUser->role()->sync($request->input('roles'));
         $updatedUser->project()->sync($request->input('projects'));
         return redirect()->route('assistants.index');
+    }
+
+    public function addPatient()
+    {
+        return view('assistants.addPatient', [
+                                        "footerYear"=>date("Y"),
+                                        "title"=>"Dodaj asystenta"]);
+    
     }
 }

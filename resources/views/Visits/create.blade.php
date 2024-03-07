@@ -10,27 +10,40 @@
     <div class="container">
         <h1>Dodaj usługę</h1>
         <form action="{{ route('visits.store') }}" method="POST" role="form">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+            @csrf
+            @method("PUT")
             <div class="form-group">
+                <label for="project">Projekt</label>
+                <select id="project" class="form-select" name="project">
+                    @foreach ($projectList as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>
+            </div><br>
+            <div class="form-group">
+                <label for="assistant">Asystent</label>
+                <select id="assistant" class="form-select" name="assistant_id">
+                    @foreach ($assistantsList as $assistant)
+                        <option value="{{ $assistant->id }}">{{ $assistant->name }} {{ $assistant->surname }}</option>
+                    @endforeach
+                </select>
+            </div><br>
+            <div class="form-group">
+                <p>Czy asystent był na usłudze przed przyjazdem do podopiecznego?</p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="chb_prev_visit_true" name="chb_prev_visit_true">
+                    <label class="form-check-label" for="chb_prev_visit_true">TAK</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="chb_prev_visit_false" name="chb_prev_visit_false">
+                    <label class="form-check-label" for="chb_prev_visit_false">NIE</label>
+                </div>
+            </div>
+            <div id="create_visit_prev_field">
                 <div class="form-group">
-                    <label for="assistant">Asystent</label>
-                    <select id="assistant" class="form-select" name="assistant">
-                        @foreach ($assistantsList as $assistant)
-                            <option value="{{ $assistant->id }}">{{ $assistant->name }} {{ $assistant->surname }}</option>
-                        @endforeach
-                    </select>
-                </div><br>
-                <div class="form-group">
-                    <p>Czy asystent był na usłudze przed przyjazdem do podopiecznego?</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="chb_prev_visit"
-                            name="chb_prev_visit">
-                        <label class="form-check-label" for="chb_prev_visit">
-                            Poprzednia usługa?
-                        </label>
-                    </div>
                     <label for="prev_visit">Poprzednia usługa u podopiecznego</label>
-                    <select id="prev_visit" class="form-select" name="prev_visit">
+                    <select id="prev_visit" class="form-select" name="from_patient_id">
+                        <option value="---">---</option>
                         @foreach ($patientsList as $patients)
                             <option value="{{ $patients->id }}">{{ $patients->name }} {{ $patients->surname }}</option>
                         @endforeach
@@ -43,10 +56,11 @@
                 @error('travel_time')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <br>
+            </div>
+            <div id="create_visit_field">
                 <div class="form-group">
                     <label for="patient">Podopieczny</label>
-                    <select id="patient" class="form-select" name="patient">
+                    <select id="patient" class="form-select" name="patient_id">
                         @foreach ($patientsList as $patients)
                             <option value="{{ $patients->id }}">{{ $patients->name }} {{ $patients->surname }}</option>
                         @endforeach
@@ -86,9 +100,63 @@
                 </div>
                 @error('additional_notes_visit')
                     <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                <input type="hidden" name="isDelete" value="0" />
+                @enderror    
                 <input type="submit" class="btn btn-primary" value="Dodaj" />
+            </div>
         </form>
+        <script type="text/javascript">
+            let visit_prev_fields = document.querySelectorAll("#create_visit_prev_field input, #create_visit_prev_field select");
+            let visit_fields = document.querySelectorAll("#create_visit_field input, #create_visit_field textarea, #create_visit_field select");
+            
+            disabled_fields(visit_prev_fields, true);
+            disabled_fields(visit_fields, true);
+
+
+            
+            function disabled_fields(fields, bool)
+            {
+                fields.forEach((field) => {
+                    field.disabled=bool;
+                });
+            }
+            
+
+            let chb_prev_visit_true=document.getElementById("chb_prev_visit_true");
+            let chb_prev_visit_false=document.getElementById("chb_prev_visit_false");
+            
+            chb_prev_visit_true.addEventListener("click", () => {
+                if(chb_prev_visit_true.checked==true)
+                {
+                    chb_prev_visit_false.checked=false;
+                    disabled_fields(visit_prev_fields, false);
+                    disabled_fields(visit_fields, false);
+                    
+                }else{
+                    chb_prev_visit_false.checked=true;
+                    chb_prev_visit_true.checked=false;
+                    disabled_fields(visit_prev_fields, true);
+                    disabled_fields(visit_fields, false);
+                }
+
+            });
+            chb_prev_visit_false.addEventListener("click", () => {
+                if(chb_prev_visit_false.checked==true)
+                {
+                    chb_prev_visit_true.checked=false;
+                    
+                    disabled_fields(visit_prev_fields, true);
+                    disabled_fields(visit_fields, false);
+                }else{
+                    chb_prev_visit_true.checked=true;
+                    chb_prev_visit_false.checked=false;
+                    
+                    disabled_fields(visit_prev_fields, false);
+                    disabled_fields(visit_fields, false);
+                }
+
+            });
+            
+        </script>
+
     </div>
 @endsection

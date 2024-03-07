@@ -30,7 +30,16 @@
                         <td>
                             @foreach ($assistant->project as $object)
                                 {{ $object->name }},
-                            @endforeach</td>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Podopieczni </td>
+                        <td>
+                            @foreach ($assistant->patient as $object)
+                                {{ $object->name }} {{ $object->surname }},
+                            @endforeach
+                        </td>
                     </tr>
                     <tr>
                         <td>Organizacja </td>
@@ -50,7 +59,19 @@
 
             </div>
         </div>
-        
+
+        <h2>Projekty</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Projekty</th>
+                    <th scope="col">Podopieczni</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
         
     </div>
 @endsection

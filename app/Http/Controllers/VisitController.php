@@ -39,6 +39,8 @@ class VisitController extends Controller
         $user = User::find($userId);
         $company=$user->company;
 
+        $project=$company->project;
+
         $assistantsRoleID=2;
         // Pobierz listę wszystkich asystentów z firmy
         $assistants = $company->user()->whereHas('role', function ($query) use ($assistantsRoleID) {
@@ -51,18 +53,23 @@ class VisitController extends Controller
             $query->where('role_id', $patientsRoleID);
         })->get();
 
-        //$assistants=$userRepo->getAllAsistants();
-        //$patients=$userRepo->getAlPatients();
-
         return view('visits.create', ["footerYear"=>date("Y"),
+                                        "projectList"=>$project,
                                         "assistantsList"=>$assistants,
                                         "patientsList"=>$patients,
                                         "title"=>"Dodaj usługę"]);
+        
+        //$assistants=$userRepo->getAllAsistants();
+        //$patients=$userRepo->getAlPatients();
     }
 
     public function store(Request $request)
     {
-
+        // if ($request->has('chb_prev_visit_true')) {
+        //     dd("zaznaczony");
+        // }else{
+        //     dd("odznaczony");
+        // }
         $this->validate($request, [
             'travel_time' => 'required|numeric',
             'date' => 'required',
@@ -87,18 +94,19 @@ class VisitController extends Controller
         $hours = intdiv($time_minute, 60).':'. ($time_minute % 60);
 
         $visit=new Visit;
-        $visit->assistant_id=$request->input('assistant');
-        $visit->from_patient_id=$request->input('prev_visit');
         $visit->travel_time=$request->input('travel_time');
-        $visit->patient_id=$request->input('patient');
         $visit->date_visit=$request->input('date');
         $visit->start_time_visit=$request->input('start_hour_visit');
         $visit->end_time_visit=$request->input('end_hour_visit');
         $visit->time_visit=$hours;
         $visit->description_visit=$request->input('description_visit');
         $visit->additional_notes=$request->input('additional_notes_visit');
-        $visit->isDelete=$request->input('isDelete');
+        $visit->isDelete=0;
         $visit->save();
+
+        $visit->visitUsers()->sync([
+            
+        ]);
 
         return redirect()->route('visits');
     }

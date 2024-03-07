@@ -15,25 +15,24 @@ class RolesUsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('roleUsers')->insert([
-            'role_id'=>1,
+            'role_id'=>2,
+            'user_id'=>1,
+            'is_delete'=>0
+        ]);
+        DB::table('roleUsers')->insert([
+            'role_id'=>3,
             'user_id'=>1,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>1,
+            'role_id'=>3,
             'user_id'=>2,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
-            'user_id'=>2,
-            'is_delete'=>0
-        ]);
-
-        DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>3,
             'user_id'=>3,
             'is_delete'=>0
         ]);
@@ -57,68 +56,68 @@ class RolesUsersTableSeeder extends Seeder
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>4,
             'user_id'=>7,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>8,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>9,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>10,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>3,
             'user_id'=>11,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>12,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>13,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>14,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>3,
             'user_id'=>15,
             'is_delete'=>0
         ]);
 
         DB::table('roleUsers')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>16,
             'is_delete'=>0
         ]);
 
         
         DB::table('roleUsers')->insert([
-            'role_id'=>2,
+            'role_id'=>3,
             'user_id'=>17,
             'is_delete'=>0
         ]);

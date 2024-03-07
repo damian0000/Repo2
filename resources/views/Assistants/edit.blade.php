@@ -16,14 +16,14 @@
             <input type="hidden" name="id" value="{{ $assistant->id }}" />
             <div class="form-group">
                 <label for="name">Imię</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ $assistant->name }}" />
+                <input type="text" class="form-control" id="name" name="name" required value="{{ $assistant->name }}" />
             </div>
             @error('name')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
                 <label for="surname">Nazwisko</label>
-                <input type="text" class="form-control" id="surname" name="surname"
+                <input type="text" class="form-control" id="surname" name="surname" required
                     value="{{ $assistant->surname }}" />
             </div>
             @error('surname')
@@ -31,21 +31,14 @@
             @enderror
             <div class="form-group">
                 <label for="pesel">Pesel</label>
-                <input type="text" class="form-control" id="pesel" name="pesel" value="{{ $assistant->pesel }}" />
+                <input type="text" class="form-control" id="pesel" name="pesel" required value="{{ $assistant->pesel }}" />
             </div>
             @error('pesel')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ $assistant->email }}" />
-            </div>
-            @error('email')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            <div class="form-group">
                 <label for="phone">Telefon</label>
-                <input type="text" class="form-control" id="phone" name="phone"
+                <input type="text" class="form-control" id="phone" name="phone" required
                     value="{{ $assistant->phone }}" />
             </div>
             @error('phone')
@@ -53,7 +46,7 @@
             @enderror
             <div class="form-group">
                 <label for="street">Ulica</label>
-                <input type="text" class="form-control" id="street" name="street"
+                <input type="text" class="form-control" id="street" name="street" required
                     value="{{ $assistant->street }}" />
             </div>
             @error('street')
@@ -61,7 +54,7 @@
             @enderror
             <div class="form-group">
                 <label for="post_code">Kod pocztowy</label>
-                <input type="text" class="form-control" id="post_code" name="post_code"
+                <input type="text" class="form-control" id="post_code" name="post_code" required
                     value="{{ $assistant->post_code }}" />
             </div>
             @error('post_code')
@@ -69,7 +62,7 @@
             @enderror
             <div class="form-group">
                 <label for="city">Miejscowość</label>
-                <input type="text" class="form-control" id="city" name="city"
+                <input type="text" class="form-control" id="city" name="city" required
                     value="{{ $assistant->city }}" />
             </div>
             @error('city')

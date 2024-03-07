@@ -30,6 +30,7 @@ class Project extends Model
         return $this->hasMany(Visit::class, 'project_id');
     }
     
+
     public static function findName($name)
     {
         return self::where('name', $name)->first();
